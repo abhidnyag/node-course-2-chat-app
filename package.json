@@ -1,5 +1,5 @@
 {
-  "name": "chat-app",
+  "name": "node-chat-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,6 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.2",
-    "html": "^1.0.0"
+    "socket.io": "^2.0.4"
   }
 }

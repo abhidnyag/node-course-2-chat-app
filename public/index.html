@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html>
@@ -9,6 +8,19 @@
 
 <body>
     <p>Welcome to the chat app</p>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    var socket = io(); //when we call this, we are actually initiating the request from the client to the server to open up a web socket 
+    
+    socket.on('connect', () => {
+       console.log('Connected to server');
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Disconnected from server');
+    })
+    </script>
 </body>
 
 </html>
