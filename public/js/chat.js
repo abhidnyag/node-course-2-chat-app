@@ -31,6 +31,8 @@ socket.on('disconnect', function (){
     console.log('Disconnected from server');
 });
 
+
+
 socket.on('updateUserList', function(users){
    var ol = jQuery('<ol></ol>');
 
@@ -38,7 +40,7 @@ socket.on('updateUserList', function(users){
        ol.append(jQuery('<li></li>').text(user));
    });
    jQuery('#users').html(ol);
-})
+});
 
 socket.on('newMessage', function(message){
     var formattedTime = moment(message.createdAt).format('h:mm a');
@@ -48,14 +50,58 @@ socket.on('newMessage', function(message){
         from: message.from,
         createdAt: formattedTime
     });
-
+    var typingStatus=0; //0=Not typing: message blank, 1=typing, 2=typing: something there
+    var typingStatus_timeout = undefined;
+    
+    //called when timeout kicks in that we've stopped typing
+    function function_typingStatus_timeout(){
+        //message entered
+        if ($('#chat_message').val().trim()) {
+            typingStatus=2;
+        //message is blank
+        } else {
+            typingStatus=0;
+        }
+        //send new status
+        connection.send(JSON.stringify({
+            action:'typingStatus',
+            typingStatus:typingStatus,
+        }));
+    }
+    
+    $(document).ready(function(){
+        //TYPING
+        $('#chat_message').keydown(function(e) {
+            //only record typing if enter not pressed
+            if(e.which!=13 && e.keyCode!=13) {
+                //weren't typing before but are now
+                if (typingStatus!=1) {
+                    //switch to 1 for in progress
+                    typingStatus=1;
+                    //broadcast
+                    connection.send(JSON.stringify({
+                        action:'typingStatus',
+                        typingStatus:typingStatus,
+                    }));        
+                //were typing before and still are, clear the timeout, we're going to reset it in the next step
+                } else {
+                    clearTimeout(typingStatus_timeout);
+                }
+                //either way, set the timeout to trigger after a second of not typing
+                typingStatus_timeout=setTimeout(function_typingStatus_timeout,1000);
+    
+            //if enter was pressed we want to not have it register as a keydown at all.  there's a separate function on keyup that looks for enter being pressed and sends the message
+            } else {
+                e.preventDefault();
+            }
+        });
+    });
     jQuery('#messages').append(html);
     scrollToBottom();
     /* var formattedTime = moment(message.createdAt).format('h:mm a'); 
     console.log('newMessage', message);
    var li = jQuery('<li></li>');
    li.text(`${message.from} ${formattedTime}: ${message.text}`);
-
    jQuery('#messages').append(li); */
 });
 
@@ -71,12 +117,12 @@ socket.on('newLocationMessage', function(message) {
     scrollToBottom();
     /* var li = jQuery('<li></li>');
     var a = jQuery('<a target="_blank">My current location</a>');
-
     li.text(`${message.from} ${formattedTime}: `);
     a.attr('href', message.url);
     li.append(a); 
     jQuery('#messages').append(li);*/
 });
+
 jQuery('#message-form').on('submit', function (e) {
     e.preventDefault();
 
@@ -90,6 +136,7 @@ jQuery('#message-form').on('submit', function (e) {
 });
 
 var locationButton = jQuery('#send-location');
+
 locationButton.on('click', function () {
   if(!navigator.geolocation){
       return alert('Geolocation not supported by your browser.');
