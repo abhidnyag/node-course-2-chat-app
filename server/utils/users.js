@@ -14,6 +14,7 @@ class Users {
   }
   
 addUser (id, name, room) {
+ room = room.toLowerCase();
   var user = {id, name, room};
   
  //console.log(room);

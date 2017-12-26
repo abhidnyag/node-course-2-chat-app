@@ -25,14 +25,15 @@ socket.on('join', (params, callback) => {
         return callback('Different usernames are required.');
        }
    }
-   socket.join(params.room);
+   
+   socket.join(params.room.toLowerCase());
    users.removeUser(socket.id);
    users.addUser(socket.id, params.name, params.room);
 
-   io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+   io.to(params.room.toLowerCase()).emit('updateUserList', users.getUserList(params.room.toLowerCase()));
    //socket.leave(params.room);
    socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
-   socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin' ,`${params.name} has joined.`));
+   socket.broadcast.to(params.room.toLowerCase()).emit('newMessage', generateMessage('Admin' ,`${params.name} has joined.`));
    callback();
 });
 
@@ -44,8 +45,6 @@ socket.on('createMessage', (message, callback) => {
     
     callback();
 });
-
-
 
 socket.on('createLocationMessage', (coords) => {
     var user = users.getUser(socket.id);
