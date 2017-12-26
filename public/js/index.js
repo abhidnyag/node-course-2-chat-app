@@ -1,4 +1,4 @@
- var socket = io();
+var socket = io();
 
 socket.on('roomList', function(rooms){
    console.log('Hii',rooms)
@@ -11,5 +11,3 @@ socket.on('roomList', function(rooms){
     });
     jQuery('#rooms').html(ol);
  }); 
-
- 

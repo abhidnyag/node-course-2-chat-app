@@ -19,7 +19,11 @@ addUser (id, name, room) {
  //console.log(room);
 this.users.push(user);
 //console.log(this.users)
- this.rooms.push(room);
+
+if(this.rooms.indexOf(room) < 0){
+  this.rooms.push(room);
+}
+ //this.rooms.push(room);
 console.log(this.rooms);
 
 return user;

@@ -25,7 +25,6 @@ socket.on('join', (params, callback) => {
         return callback('Different usernames are required.');
        }
    }
-   //io.emit('roomList', users.getAllRoomList());
    socket.join(params.room);
    users.removeUser(socket.id);
    users.addUser(socket.id, params.name, params.room);
