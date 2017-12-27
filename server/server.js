@@ -21,9 +21,6 @@ io.emit('roomList', users.getAllRoomList());
 socket.on('join', (params, callback) => {
     if(!isRealString(params.name) || !isRealString(params.room)){
       return callback('Name and room name are required.');
-      if(!isRealString(params.name) === !isRealString(params.name)){
-        return callback('Different usernames are required.');
-       }
    }
    
    socket.join(params.room.toLowerCase());

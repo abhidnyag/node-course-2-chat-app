@@ -11,16 +11,18 @@ class Users {
   constructor () {
       this.users = [];
      this.rooms=[];
+     this.names=[];
   }
   
 addUser (id, name, room) {
  room = room.toLowerCase();
   var user = {id, name, room};
-  
- //console.log(room);
-this.users.push(user);
-//console.log(this.users)
-
+  this.names.push(user.name);
+  /* if(this.names[length-1-1] === this.names[length-1]){
+    console.log('errro')
+  } */
+  this.users.push(user);
+ 
 if(this.rooms.indexOf(room) < 0){
   this.rooms.push(room);
 }
