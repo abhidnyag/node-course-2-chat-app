@@ -16,13 +16,17 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
  console.log('New user connected');
- 
+// var roomlist = users.getAllRoomList();
 io.emit('roomList', users.getAllRoomList());
 socket.on('join', (params, callback) => {
     if(!isRealString(params.name) || !isRealString(params.room)){
       return callback('Name and room name are required.');
-   }
    
+   }
+   if(users.addUser(socket.id, params.name, params.room) == false ) {
+    return callback('Username Already exists');
+   }
+  
    socket.join(params.room.toLowerCase());
    users.removeUser(socket.id);
    users.addUser(socket.id, params.name, params.room);
