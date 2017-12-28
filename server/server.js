@@ -1,6 +1,11 @@
 const path = require('path');
 const http = require('http');
 const express = require('express');
+const bodyParser = require('body-parser');
+const {ObjectID} = require('mongodb');
+
+var {mongoose} = require('./db/mongoose');
+var {User} = require('./models/user');
 const socketIO = require('socket.io');
 
 const {generateMessage, generateLocationMessage} = require('./utils/message');
@@ -13,6 +18,23 @@ var server = http.createServer(app);
 var io = socketIO(server);
 var users = new Users();
 app.use(express.static(publicPath));
+
+app.use(bodyParser.json());
+
+app.post('/users', (req, res) => {
+//console.log(req.body);
+var users = new User({
+    name: req.body.name,
+    room: req.body.room
+});
+
+users.save().then((doc) => {
+  res.send(doc);
+}, (e) => {
+  res.status(400).send(e);
+});
+});
+
 
 io.on('connection', (socket) => {
  console.log('New user connected');
@@ -43,8 +65,7 @@ socket.on('createMessage', (message, callback) => {
    if(user && isRealString(message.text)){
     io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
    }
-    
-    callback();
+   callback();
 });
 
 socket.on('createLocationMessage', (coords) => {
@@ -68,3 +89,5 @@ socket.on('disconnect', () =>{
 server.listen(port, () => {
 console.log(`Server is up on ${port}`);
 });
+
+module.exports = {app};
