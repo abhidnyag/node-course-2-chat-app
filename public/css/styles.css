@@ -112,6 +112,7 @@ button,button:hover{
     padding:10px;
     opacity: 0.6;
     filter: alpha(opacity=60);
+  
     }
     .chat{
     display:flex
@@ -128,10 +129,16 @@ button,button:hover{
     background:linear-gradient(325deg,rgba(39,107,130,1) 0,rgba(49,84,129,1) 100%)
     }
     .chat__footer, li{
-    background:#646464;
+        background-color:black;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
     color: white;
-   opacity: 0.8;
+    
     padding:10px
+    }
+    input{
+        color: black;
+        background: #444444
     }
     .chat__sidebar h3{
     color:white;
@@ -177,7 +184,9 @@ button,button:hover{
     }
     .message{
     padding:10px 0 0 10px;
-    background-color:black
+    background-color:black;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
     }
     .message__title{
     color: #e6eaee;
