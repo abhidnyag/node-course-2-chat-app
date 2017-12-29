@@ -8,34 +8,35 @@ addUser (id, name, room) {
  room = room.toLowerCase();
   var user = {id, name, room};
   
+  
+ if(this.users.length==0){
   this.users.push(user);
-  /* if(this.users.length==0)
-  {
-      this.users.push(user);
+ }
+else{
+  var con = this.users.filter((user)=> {
+    var data = user.name ===name;
+    return data;
+  });
+  if(con.length==0){
+    this.users.push(user);
   }
   else
   {
-   for(var i in this.users)
-   {
-     if(this.users[i].name == user.name)
-      {
-       return false;
-      }
-       else
-      {
-       this.users.push(user);
-      }
-    }
-  } */
-if(this.rooms.indexOf(room) < 0){
-  this.rooms.push(room);
+    return false;
+  }
+  if(this.rooms.indexOf(room) < 0){
+    this.rooms.push(room);
+  }
 }
- //this.rooms.push(room);
-//console.log(this.rooms);
-
 return user;
 return room;
 }
+
+ //this.rooms.push(room);
+//console.log(this.rooms);
+
+
+
 
 removeUser (id){
   var user =  this.getUser(id);

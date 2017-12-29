@@ -1,6 +1,45 @@
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: rgb(26, 26, 26);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
 button,button:hover{
     border:none;
-    color:#fff;
+    columns: black;
     padding:10px
     }
     .chat__messages,.chat__sidebar ul{
@@ -23,12 +62,12 @@ button,button:hover{
     font-size:1.5rem
     }
     button{
-    background:#265f82;
+    background:#e6eaee;
     cursor:pointer;
     transition:background .3s ease}
     
     button:hover{
-    background:#1F4C69
+    background:black
     }
     button:disabled{
     cursor:default;
@@ -83,25 +122,30 @@ button,button:hover{
     background:-ms-linear-gradient(125deg,rgba(39,107,130,1) 0,rgba(49,84,129,1) 100%);
     background:linear-gradient(325deg,rgba(39,107,130,1) 0,rgba(49,84,129,1) 100%)
     }
-    .chat__footer,.chat__sidebar li{
-    background:#e6eaee;
+    .chat__footer, li{
+    background:#646464;
+    color: #1F4C69;
+    opacity: 0.5;
     padding:10px
     }
     .chat__sidebar h3{
-    color:#e6eaee;
+    color:white;
     margin:10px 20px;
     text-align:left
     }
-    .chat__sidebar li{
+   li{
     border:1px solid #e1e1e1;
     border-radius:5px;
-    margin:10px
-    }
+    margin:10px;
+    color: white;
+    } 
+   
     .chat__main{
     display:flex;
     flex-direction:column;
     height:100vh;
-    width:100%
+    width:100%;
+    
     }
     .chat__messages{
     flex-grow:1;
@@ -125,13 +169,15 @@ button,button:hover{
     flex-grow:1
     }
     .message{
-    padding:10px
+    padding:10px 0 0 10px
     }
     .message__title{
+    color: #e6eaee;
     display:flex;
     margin-bottom:5px
     }
     .message__title h4{
+        color: black;
     font-weight:600;
     margin-right:10px
     }
@@ -155,3 +201,6 @@ button,button:hover{
     margin-right:0
     }
     }
+
+
+    
